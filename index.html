@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pixelin – Smarter Security, Simply</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet" />
+    <style>
+        /* ==================
+         * CSS STYLES (BRIGHT THEME)
+         * ================== */
+        :root {
+            --bg-light: #f8f9fa;
+            --surface: #ffffff;
+            --primary: #007bff;
+            --primary-light: rgba(0, 123, 255, 0.1);
+            --text-primary: #212529;
+            --text-secondary: #6c757d;
+            --border-color: #dee2e6;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-primary);
+            margin: 0;
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        /* --- NAVIGATION --- */
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5vw;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-logo {
+            width: 47px;
+            height: 75px;
+            border-radius: 8px;
+        }
+
+        .brand-name {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 600;
+            margin-left: 2rem;
+            padding: 8px 0;
+            border-bottom: 2px solid transparent;
+            transition: color 0.3s, border-color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-btn {
+            background-color: var(--primary);
+            color: white;
+            padding: 10px 22px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .nav-btn:hover {
+            background-color: #0069d9;
+            transform: translateY(-2px);
+            color: white;
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 80px 5vw;
+            min-height: 70vh;
+            position: relative; /* Essential for positioning the canvas */
+            overflow: hidden; /* Prevents canvas overflow */
+        }
+        
+        #particle-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1; /* Places canvas behind content */
+        }
+
+        .hero-content {
+             max-width: 650px;
+             position: relative; /* Ensures content is above canvas */
+             z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 550px;
+            margin: 0 auto 2rem auto;
+        }
+
+        .cta {
+            background: var(--primary);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .cta:hover {
+            background-color: #0069d9;
+            transform: translateY(-3px);
+        }
+
+        /* --- GENERAL SECTION STYLING --- */
+        section {
+            padding: 80px 5vw;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 3rem;
+        }
+        
+        /* --- FEATURES SECTION --- */
+        #features {
+            background-color: var(--surface);
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background-color: var(--surface);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2.5rem 2rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            height: 48px;
+            width: 48px;
+            display: inline-block;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0 0 0.5rem 0;
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin: 0;
+        }
+
+        /* --- ABOUT & LAUNCH SECTIONS --- */
+        #about {
+            background-color: var(--bg-light);
+        }
+        
+        .about-content {
+            max-width: 700px;
+            margin: 0 auto;
+            background: var(--surface);
+            padding: 3rem;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .about-content p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        
+        .about-content .accent {
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        .about-content .muted {
+            font-style: italic;
+        }
+
+        #launch {
+            background-color: var(--primary-light);
+            color: var(--text-primary);
+        }
+
+        #launch h2 {
+            color: var(--text-primary);
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            font-weight: 600;
+        }
+        
+        .countdown-item {
+            text-align: center;
+        }
+
+        .countdown-number {
+            font-size: 3rem;
+            line-height: 1;
+            color: var(--primary);
+        }
+        
+        .countdown-label {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-secondary);
+        }
+
+        /* --- TEAM SECTION (UPDATED) --- */
+        #team {
+            background-color: var(--surface);
+        }
+        
+        .team-grid {
+             display: grid;
+             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+             gap: 1.5rem;
+             max-width: 1100px;
+             margin: 3rem auto 0;
+        }
+        
+        .team-card {
+            background-color: var(--bg-light);
+            padding: 2rem 1rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .team-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+        }
+        
+        .team-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1.5rem;
+            border: 3px solid var(--surface);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .team-card h3 {
+            font-size: 1.25rem;
+            margin: 0 0 0.25rem;
+            color: var(--text-primary);
+        }
+        
+        .team-card .role {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* --- NEWSLETTER SECTION --- */
+        #newsletter {
+            background-color: var(--bg-light);
+        }
+        
+        #newsletter form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            max-width: 600px;
+            margin: 2rem auto 0;
+            flex-wrap: wrap;
+        }
+
+        #newsletter input[type="email"] {
+            flex-grow: 1;
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            background-color: var(--surface);
+            color: var(--text-primary);
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        #newsletter input[type="email"]:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+        }
+
+        #newsletter button {
+            background: var(--primary);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        #newsletter button:hover {
+            background-color: #0069d9;
+            transform: translateY(-2px);
+        }
+        
+        .response-message {
+            margin-top: 1rem;
+            font-weight: 600;
+            height: 20px;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: var(--surface);
+            border-top: 1px solid var(--border-color);
+            padding: 2rem 5vw;
+            text-align: center;
+        }
+
+        .footer-links {
+            margin-bottom: 1rem;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            margin: 0 1rem;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .footer-copy {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        /* --- RESPONSIVE DESIGN --- */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+            .nav-links { display: none; }
+            .features-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header class="nav">
+        <div class="brand">
+            <img src="p2.png" alt="Pixelin Logo" class="brand-logo" />
+            <span class="brand-name">Pixelin</span>
+        </div>
+        <nav class="nav-links">
+            <a href="#features">Features</a>
+            <a href="attendify.html" style="font-weight: 700;">Attendify</a>
+            <a href="#about">About</a>
+            <a href="#team">Team</a>
+        </nav>
+        <a href="#newsletter" class="nav-btn">Newsletter</a>
+    </header>
+
+    <main>
+        <section class="hero">
+            <canvas id="particle-canvas"></canvas>
+            <div class="hero-content">
+                <h1>Smart Face Recognition, Seamless Protection</h1>
+                <p>
+                    Pixelin secures your space with intelligent face tracking and theft detection—built for classrooms, offices, and beyond. Real-time recognition that simplifies safety and attendance.
+                </p>
+                <a href="#newsletter" class="cta">Get Early Access</a>
+            </div>
+        </section>
+
+        <section id="features" class="features">
+            <h2 style="color: var(--primary);">What Pixelin Offers</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg></div>
+                    <h3>Face ID</h3>
+                    <p>Instantly match faces in real time using deep learning.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div>
+                    <h3>Live Alerts</h3>
+                    <p>Immediate push notifications for all security events.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg></div>
+                    <h3>Visual Reports</h3>
+                    <p>Clean, shareable analytics on activity and entries.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="m9 16 2 2 4-4"/></svg></div>
+                    <h3>Attendance Taking</h3>
+                    <p>Automate and streamline attendance records with fast, accurate face recognition.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/><path d="M7 7l10 10M7 17l10-10"/></svg></div>
+                    <h3>Thief Tracking</h3>
+                    <p>Leverage AI to detect and track unauthorized individuals, protecting your assets.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg></div>
+                    <h3>Data Privacy</h3>
+                    <p>Your data is encrypted and yours alone. We provide full control over your information.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="about">
+             <div class="about-content">
+                 <h2>Our Philosophy</h2>
+                 <p>
+                     <b>Pixelin</b> is built from the ground up for clarity, speed, and <span class="accent">calm</span>.
+                     We believe security tech should be as welcoming as it is powerful.
+                     <br>
+                     <span class="muted">Your data, your control, with no complexity or clutter.</span>
+                 </p>
+             </div>
+        </section>
+        
+        <section id="team" class="team">
+            <h2>Meet the Team Behind Pixelin</h2>
+            <p class="section-subtitle" style="color: var(--text-secondary);">The innovators dedicated to making security simple and intelligent.</p>
+            <div class="team-grid">
+                <div class="team-card">
+                    <img src="Krish_2.jpg" alt="Krish Pachchigar" class="team-avatar">
+                    <h3>Krish Pachchigar</h3>
+                    <p class="role">CEO & Head of Strategy</p>
+                </div>
+                <div class="team-card">
+                    <img src="Hardik.jpg" alt="Hardik Zaloya" class="team-avatar">
+                    <h3>Hardik Zaloya</h3>
+                    <p class="role">CTO (Technology Visionary)</p>
+                </div>
+                <div class="team-card">
+                    <img src="Varun_1.jpg" alt="Varun Patel" class="team-avatar">
+                    <h3>Varun Patel</h3>
+                    <p class="role">COO (Operations and Product Delivery)</p>
+                </div>
+                <div class="team-card">
+                    <img src="Priyanshi.jpg" alt="Priyanshi Tanwani" class="team-avatar">
+                    <h3>Priyanshi Tanwani</h3>
+                    <p class="role">CIO (Innovation and AI Research)</p>
+                </div>
+                <div class="team-card">
+                    <img src="Trisha.jpg" alt="Trisha Shingala" class="team-avatar">
+                    <h3>Trisha Shingala</h3>
+                    <p class="role">CMO (Brand, Communication, and User Experience)</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="newsletter" class="newsletter">
+            <h2>Stay in the Loop</h2>
+            <p style="color: var(--text-secondary); max-width: 500px; margin: 0 auto;">Sign up to get early access and updates, straight to your inbox.</p>
+            <form id="newsletterForm">
+                <input type="email" name="email" placeholder="Your email address" required />
+                <button type="submit">Notify Me</button>
+            </form>
+            <div id="responseMsg" class="response-message"></div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-links">
+            <a href="#">Terms</a> · <a href="#">Privacy</a> · <a href="mailto:info@pixelin.ai">Contact</a>
+        </div>
+        <div class="footer-copy">&copy; 2025 Pixelin. All rights reserved.</div>
+    </footer>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script>
+        // --- Initialize EmailJS with your Public Key ---
+        (function() {
+            // Replace with your Public Key from the EmailJS dashboard
+            emailjs.init({ publicKey: "1PZYtv-MWEaTrQnt-" });
+        })();
+        
+        // --- Newsletter form submission handler ---
+        document.getElementById('newsletterForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const emailInput = this.email;
+            const responseDiv = document.getElementById('responseMsg');
+            const submitButton = this.querySelector('button');
+            submitButton.disabled = true;
+            submitButton.textContent = 'Submitting...';
+            responseDiv.textContent = '';
+            responseDiv.style.color = 'var(--text-secondary)';
+            // --- Send the email using EmailJS ---
+            emailjs.send("service_m33ogc1", "template_cvcqx89", {
+                user_email: emailInput.value
+            })
+            .then(function(response) {
+               console.log('SUCCESS!', response.status, response.text);
+               responseDiv.textContent = 'Thank you! A confirmation email has been sent.';
+               responseDiv.style.color = 'var(--primary)';
+               submitButton.disabled = false;
+               submitButton.textContent = 'Notify Me';
+               emailInput.value = '';
+            }, function(error) {
+               console.log('FAILED...', error);
+               responseDiv.textContent = 'Failed to subscribe. Please try again.';
+               responseDiv.style.color = '#dc3545';
+               submitButton.disabled = false;
+               submitButton.textContent = 'Notify Me';
+            });
+        });
+    </script>
+    
+    <script>
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        let particlesArray;
+
+        // Mouse position
+        const mouse = {
+            x: null,
+            y: null,
+            radius: 150
+        }
+
+        window.addEventListener('mousemove', function(event) {
+            mouse.x = event.x;
+            mouse.y = event.y;
+        });
+
+        // Particle Class
+        class Particle {
+            constructor(x, y, directionX, directionY, size, color) {
+                this.x = x;
+                this.y = y;
+                this.directionX = directionX;
+                this.directionY = directionY;
+                this.size = size;
+                this.color = color;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
+                ctx.fillStyle = 'rgba(0, 123, 255, 0.5)';
+                ctx.fill();
+            }
+            update() {
+                if (this.x > canvas.width || this.x < 0) {
+                    this.directionX = -this.directionX;
+                }
+                if (this.y > canvas.height || this.y < 0) {
+                    this.directionY = -this.directionY;
+                }
+                
+                // Mouse collision
+                let dx = mouse.x - this.x;
+                let dy = mouse.y - this.y;
+                let distance = Math.sqrt(dx * dx + dy * dy);
+                if (distance < mouse.radius + this.size) {
+                    if (mouse.x < this.x && this.x < canvas.width - this.size * 10) {
+                        this.x += 10;
+                    }
+                    if (mouse.x > this.x && this.x > this.size * 10) {
+                        this.x -= 10;
+                    }
+                    if (mouse.y < this.y && this.y < canvas.height - this.size * 10) {
+                        this.y += 10;
+                    }
+                     if (mouse.y > this.y && this.y > this.size * 10) {
+                        this.y -= 10;
+                    }
+                }
+
+                this.x += this.directionX;
+                this.y += this.directionY;
+                this.draw();
+            }
+        }
+
+        // Create particle array
+        function init() {
+            canvas.width = window.innerWidth;
+            canvas.height = document.querySelector('.hero').offsetHeight;
+            particlesArray = [];
+            let numberOfParticles = (canvas.height * canvas.width) / 9000;
+            for (let i = 0; i < numberOfParticles; i++) {
+                let size = (Math.random() * 2) + 1;
+                let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
+                let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
+                let directionX = (Math.random() * .4) - .2;
+                let directionY = (Math.random() * .4) - .2;
+                particlesArray.push(new Particle(x, y, directionX, directionY, size));
+            }
+        }
+
+        // Animation Loop
+        function animate() {
+            requestAnimationFrame(animate);
+            ctx.clearRect(0, 0, innerWidth, innerHeight);
+
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update();
+            }
+            connect();
+        }
+
+        // Connect particles with lines
+        function connect() {
+            let opacityValue = 1;
+            for (let a = 0; a < particlesArray.length; a++) {
+                for (let b = a; b < particlesArray.length; b++) {
+                    let distance = ((particlesArray[a].x - particlesArray[b].x) * (particlesArray[a].x - particlesArray[b].x)) +
+                                 ((particlesArray[a].y - particlesArray[b].y) * (particlesArray[a].y - particlesArray[b].y));
+                    if (distance < (canvas.width / 7) * (canvas.height / 7)) {
+                        opacityValue = 1 - (distance / 20000);
+                        ctx.strokeStyle = `rgba(0, 123, 255, ${opacityValue})`;
+                        ctx.lineWidth = 1;
+                        ctx.beginPath();
+                        ctx.moveTo(particlesArray[a].x, particlesArray[a].y);
+                        ctx.lineTo(particlesArray[b].x, particlesArray[b].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+        
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            init();
+        });
+        
+        // Initial setup and start animation
+        init();
+        animate();
+    </script>
+</body>
+</html>
