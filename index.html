@@ -91,6 +91,20 @@
             color: white;
         }
 
+        .hamburger-menu {
+            display: none; /* Hidden by default */
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            z-index: 1010; /* Ensures it's on top */
+        }
+
+        .hamburger-menu svg {
+            stroke: var(--text-primary);
+        }
+
+
         /* --- HERO SECTION --- */
         .hero {
             display: flex;
@@ -419,8 +433,33 @@
         @media (max-width: 768px) {
             .hero h1 { font-size: 2.5rem; }
             h2 { font-size: 2rem; }
-            .nav-links { display: none; }
             .features-grid { grid-template-columns: 1fr; }
+
+            /* Hide the text links and the main "Newsletter" button */
+            .nav-links,
+            .nav-btn {
+                display: none;
+            }
+            
+            /* Show the hamburger menu button */
+            .hamburger-menu {
+                display: block;
+            }
+
+            /* Style the navigation links for the mobile view */
+            .nav-links.active {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 1.5rem;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                padding: 6rem 0 2rem 0;
+                background-color: var(--surface);
+                box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            }
         }
     </style>
 </head>
@@ -430,6 +469,11 @@
             <img src="p2.png" alt="Pixelin Logo" class="brand-logo" />
             <span class="brand-name">Pixelin</span>
         </div>
+
+        <button class="hamburger-menu" aria-label="Toggle Menu">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+
         <nav class="nav-links">
             <a href="#features">Features</a>
             <a href="attendify.html" style="font-weight: 700;">Attendify</a>
@@ -489,13 +533,13 @@
 
         <section id="about" class="about">
              <div class="about-content">
-                 <h2>Our Philosophy</h2>
-                 <p>
-                     <b>Pixelin</b> is built from the ground up for clarity, speed, and <span class="accent">calm</span>.
-                     We believe security tech should be as welcoming as it is powerful.
-                     <br>
-                     <span class="muted">Your data, your control, with no complexity or clutter.</span>
-                 </p>
+                  <h2>Our Philosophy</h2>
+                  <p>
+                      <b>Pixelin</b> is built from the ground up for clarity, speed, and <span class="accent">calm</span>.
+                      We believe security tech should be as welcoming as it is powerful.
+                      <br>
+                      <span class="muted">Your data, your control, with no complexity or clutter.</span>
+                  </p>
              </div>
         </section>
         
@@ -504,7 +548,7 @@
             <p class="section-subtitle" style="color: var(--text-secondary);">The innovators dedicated to making security simple and intelligent.</p>
             <div class="team-grid">
                 <div class="team-card">
-                    <img src="Krish_3.jpg" alt="Krish Pachchigar" class="team-avatar">
+                    <img src="krish_3.jpg" alt="Krish Pachchigar" class="team-avatar">
                     <h3>Krish Pachchigar</h3>
                     <p class="role">CEO & Head of Strategy</p>
                 </div>
@@ -709,6 +753,15 @@
         // Initial setup and start animation
         init();
         animate();
+    </script>
+    <script>
+        // Hamburger Menu Toggle
+        const hamburgerBtn = document.querySelector('.hamburger-menu');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburgerBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
     </script>
 </body>
 </html>
